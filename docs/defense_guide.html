@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="bg">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Проект по Големи данни - Ръководство за защита</title>
+<style>
+  :root{
+    --bg:#f6f8fa; --card:#ffffff; --ink:#1a2330; --muted:#5b6673;
+    --blue:#0072B2; --green:#009E73; --orange:#E69F00; --purple:#8e5bb5;
+    --line:#e2e8ef; --code:#eef2f6; --good:#0a7d4d;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+    line-height:1.6;font-size:16px}
+  .wrap{max-width:980px;margin:0 auto;padding:32px 20px 80px}
+  header.hero{border-bottom:4px solid var(--blue);padding-bottom:18px;margin-bottom:10px}
+  header.hero h1{font-size:28px;margin:0 0 6px}
+  header.hero .sub{color:var(--muted);font-size:15px}
+  nav.toc{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:16px 20px;margin:22px 0 30px}
+  nav.toc b{display:block;font-size:13px;text-transform:uppercase;letter-spacing:.05em;
+    color:var(--muted);margin-bottom:8px}
+  nav.toc ol{margin:0;padding-left:20px;columns:2;column-gap:28px}
+  nav.toc a{color:var(--blue);text-decoration:none}
+  nav.toc a:hover{text-decoration:underline}
+  h2{font-size:22px;margin:38px 0 14px;padding-left:12px;border-left:5px solid var(--blue)}
+  h3{font-size:18px;margin:24px 0 8px}
+  p{margin:8px 0}
+  table{border-collapse:collapse;width:100%;background:var(--card);
+    border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:14px 0;font-size:14.5px}
+  th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:#eaf0f6;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+  tr:last-child td{border-bottom:none}
+  .ok{color:var(--good);font-weight:700}
+  code{font-family:"SF Mono",Menlo,Consolas,monospace;background:var(--code);
+    padding:1.5px 6px;border-radius:5px;font-size:.88em}
+  pre{background:#0f1b2d;color:#e7eef7;border-radius:10px;padding:14px 16px;overflow-x:auto;
+    font-size:13.5px;line-height:1.5}
+  pre code{background:none;color:inherit;padding:0}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:16px 0}
+  .file{border-left:5px solid var(--blue)}
+  .file.faker{border-left-color:var(--orange)}
+  .file.dask{border-left-color:var(--green)}
+  .file.spark{border-left-color:var(--blue)}
+  .file.ray{border-left-color:var(--purple)}
+  .pill{display:inline-block;font-size:12px;font-weight:700;border-radius:999px;padding:2px 10px;
+    color:#fff;margin-left:6px;vertical-align:middle}
+  .pill.faker{background:var(--orange)} .pill.dask{background:var(--green)}
+  .pill.spark{background:var(--blue)} .pill.ray{background:var(--purple)}
+  .say{background:#fff8e8;border:1px solid #f0dca8;border-radius:10px;padding:10px 14px;margin:10px 0;font-size:14.5px}
+  .say::before{content:"🎤 Кажи на защитата: ";font-weight:700;color:#8a5d10}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:16px 0}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px}
+  .kpi .v{font-size:20px;font-weight:800;color:var(--blue)}
+  .kpi .l{font-size:12.5px;color:var(--muted);margin-top:3px}
+  .qa{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:4px 18px;margin:14px 0}
+  .qa details{padding:10px 0;border-bottom:1px solid var(--line)}
+  .qa details:last-child{border-bottom:none}
+  .qa summary{font-weight:700;cursor:pointer;color:var(--ink)}
+  .qa summary::marker{color:var(--blue)}
+  .qa .ans{margin-top:8px;color:#333}
+  footer{margin-top:50px;border-top:1px solid var(--line);padding-top:16px;color:var(--muted);font-size:13.5px}
+  @media(max-width:640px){nav.toc ol{columns:1}}
+  @media print{body{background:#fff}.card,table,nav.toc{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <h1>Проект по „Големи данни" - Ръководство за защита</h1>
+  <div class="sub">Вариант 1 - Анализ на големи данни · Избран тип: <b>Дескриптивен (Descriptive)</b> ·
+  Тема: е-търговски транзакции · Библиотеки: Faker, Dask, PySpark, Ray</div>
+</header>
+
+<nav class="toc">
+  <b>Съдържание</b>
+  <ol>
+    <li><a href="#overview">Какво представлява проектът</a></li>
+    <li><a href="#breakdown">Breakdown: изисквания → статус</a></li>
+    <li><a href="#flow">Как тече обработката (pipeline)</a></li>
+    <li><a href="#files">Обяснение на всеки файл</a></li>
+    <li><a href="#results">Резултати от анализа</a></li>
+    <li><a href="#concepts">Ключови понятия (cheat sheet)</a></li>
+    <li><a href="#run">Как да го пусна (macOS)</a></li>
+    <li><a href="#qa">Въпроси и отговори за защитата</a></li>
+    <li><a href="#speech">Какво да кажа за 2 минути</a></li>
+  </ol>
+</nav>
+
+<!-- 1 -->
+<h2 id="overview">1. Какво представлява проектът</h2>
+<p>Python приложение, което минава през <b>целия жизнен цикъл на големите данни</b> върху
+~1 000 000 синтетични записа за поръчки в електронен магазин:</p>
+<p><b>Генериране → Почистване → Анализ → Визуализация → Автоматичен репорт.</b></p>
+<p>Избрах <b>дескриптивен анализ</b> - той отговаря на въпроса <i>„Какво се случи?"</i>:
+обобщава суровите данни чрез статистики (суми, средни, медиана, стандартно отклонение,
+квартили, асиметрия) и агрегации (по продукт, категория, град, време). Използвам и
+четирите задължителни библиотеки, всяка за своята силна страна.</p>
+<div class="say">Избрах дескриптивен анализ, защото той е основата на всеки по-нататъшен анализ -
+преди да питаш „защо" или „какво ще стане", първо трябва да опишеш какво има в данните.</div>
+
+<!-- 2 -->
+<h2 id="breakdown">2. Breakdown: изисквания от заданието → статус</h2>
+<table>
+  <thead><tr><th>Изискване</th><th>Статус</th><th>Къде е реализирано</th></tr></thead>
+  <tbody>
+    <tr><td>Python приложение за обработка на голям набор данни</td><td class="ok">✔</td><td>целият <code>src/</code> + <code>main.py</code></td></tr>
+    <tr><td>Вариант 1, един от 4 анализа → <b>Дескриптивен</b></td><td class="ok">✔</td><td><code>spark_descriptive.py</code></td></tr>
+    <tr><td><b>PySpark</b> - разпределена обработка (15 т.)</td><td class="ok">✔</td><td><code>src/spark_descriptive.py</code></td></tr>
+    <tr><td><b>Dask</b> - обработка на данните (10 т.)</td><td class="ok">✔</td><td><code>src/dask_processing.py</code></td></tr>
+    <tr><td><b>Ray</b> - паралелно изпълнение (10 т.)</td><td class="ok">✔</td><td><code>src/ray_parallel.py</code></td></tr>
+    <tr><td><b>Faker</b> - генериране на данни (10 т.)</td><td class="ok">✔</td><td><code>src/generator.py</code></td></tr>
+    <tr><td>Минимум 500 000 записа</td><td class="ok">✔</td><td>1 000 000 (839 877 след почистване)</td></tr>
+    <tr><td>Поне 4 визуализации</td><td class="ok">✔ (6 бр.)</td><td><code>reports/charts/*.png</code></td></tr>
+    <tr><td>Автоматичен репорт (конзола/.txt/HTML/PDF)</td><td class="ok">✔</td><td><code>.txt</code> + <code>.html</code> + конзолни логове</td></tr>
+    <tr><td>Кратки изводи</td><td class="ok">✔</td><td>секция „Conclusions" в репорта</td></tr>
+    <tr><td>Брой обработени записи</td><td class="ok">✔</td><td>в репорта: 839 877</td></tr>
+    <tr><td>Измерване на времето на основните операции</td><td class="ok">✔</td><td>таймер на всеки етап</td></tr>
+    <tr><td>Предаване: код + requirements.txt + репорт + визуализации</td><td class="ok">✔</td><td>всичко в repo-то</td></tr>
+  </tbody>
+</table>
+<p><b>Оценяване (100 т.):</b> Данни 10 · Faker 10 · Dask 10 · PySpark 15 · Ray 10 ·
+Реализация на анализа 20 · Визуализация 10 · Репорт 10 · Качество 5 - всички компоненти са покрити.</p>
+
+<!-- 3 -->
+<h2 id="flow">3. Как тече обработката (pipeline)</h2>
+<p><code>main.py</code> оркестрира 6 етапа по ред и мери времето на всеки:</p>
+<table>
+  <thead><tr><th>#</th><th>Етап</th><th>Библиотека</th><th>Вход → Изход</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>Генериране</td><td><b>Faker</b></td><td>- → 10 CSV файла (сурови данни)</td></tr>
+    <tr><td>2</td><td>Почистване + статистики</td><td><b>Dask</b></td><td>CSV → почистен <b>Parquet</b> + стат.</td></tr>
+    <tr><td>3</td><td>Дескриптивен анализ</td><td><b>PySpark</b></td><td>Parquet → агрегирани CSV</td></tr>
+    <tr><td>4</td><td>Паралелни статистики</td><td><b>Ray</b></td><td>CSV → глобални стат. + хистограма</td></tr>
+    <tr><td>5</td><td>Графики</td><td>matplotlib</td><td>CSV → 6 PNG</td></tr>
+    <tr><td>6</td><td>Репорт</td><td>-</td><td>всичко → .txt + .html</td></tr>
+  </tbody>
+</table>
+<div class="say">Dask чисти и подготвя данните, Spark прави тежките агрегации, а Ray независимо
+преизчислява ключовите статистики - и репортът проверява, че трите дават един и същ
+резултат. Това е и начин за валидиране на pipeline-а.</div>
+
+<!-- 4 -->
+<h2 id="files">4. Обяснение на всеки файл</h2>
+
+<div class="card file">
+  <h3><code>config.py</code> - централна конфигурация</h3>
+  <p>Всички настройки на едно място: пътища до папките и класове
+  <code>DataGenConfig</code>, <code>SparkConfig</code>, <code>DaskConfig</code>, <code>RayConfig</code>.
+  Чете стойности от <code>.env</code> файл (чрез <code>python-dotenv</code>), с разумни стойности по подразбиране.</p>
+  <div class="say">Сложил съм всичко в config, за да мога да сменям размера на данните или паметта на Spark
+  без да пипам кода - добра практика за възпроизводимост.</div>
+</div>
+
+<div class="card file">
+  <h3><code>logger_config.py</code> - логване</h3>
+  <p>Функция <code>setup_logger()</code>, която пише едновременно на <b>конзолата</b> и във
+  <b>файл</b> (папка <code>logs/</code>). Всеки етап си има свой лог.</p>
+</div>
+
+<div class="card file faker">
+  <h3><code>src/generator.py</code> <span class="pill faker">Faker</span></h3>
+  <p>Генерира 1 000 000 транзакции в 10 CSV файла. Прави пул от 20 000 потребителя
+  (с <code>fake.name()</code>, <code>fake.email()</code>, <code>fake.city()</code>…), за да може един
+  потребител да се среща в много поръчки. Всеки запис има продукт, категория, цена,
+  количество, сума, метод на плащане, статус и времеви полета (година/месец/ден/час).</p>
+  <p><b>Нарочно „мръсни" данни:</b> ~5% от полетата се записват като <code>NULL</code> и ~2% от
+  редовете имат невалидна (отрицателна) цена/количество - за да има какво да чисти следващият етап.</p>
+  <p><b>Ключово:</b> <code>seed=42</code> на всички случайни източници → еднакви данни при всяко пускане.</p>
+  <div class="say">Faker ми дава реалистични имена, имейли и градове с един ред код. Задавам seed,
+  за да са резултатите възпроизводими - иначе всяко пускане би дало различни числа.</div>
+</div>
+
+<div class="card file dask">
+  <h3><code>src/dask_processing.py</code> <span class="pill dask">Dask</span></h3>
+  <p>Чете <b>всички</b> CSV файлове с един glob шаблон
+  (<code>dd.read_csv("transactions_part_*.csv")</code>) и ги разделя на партиции. После:</p>
+  <ul>
+    <li><b>чисти:</b> маха редове с невалидна цена/количество/сума, запълва останалите
+    <code>NULL</code> със стойности по подразбиране, добавя колона <code>revenue</code>, маха дубликати;</li>
+    <li><b>смята статистики:</b> count, mean, std, min, max, медиана и квартили за числовите колони;</li>
+    <li><b>записва</b> почистените данни в <b>Parquet</b> (колонен, компресиран формат).</li>
+  </ul>
+  <p><b>Ключово - lazy evaluation:</b> нищо не се смята веднага. Строя „граф от задачи" и го
+  изпълнявам с <b>един</b> <code>dask.compute()</code>, който чете данните веднъж и смята всичко
+  паралелно наведнъж. Затова етапът е бърз въпреки многото статистики.</p>
+  <div class="say">Dask работи с „отложено изпълнение" - описвам какво искам, а то се смята чак при
+  compute(). Събрах всички агрегации в едно compute, за да се мине през данните само веднъж.</div>
+</div>
+
+<div class="card file spark">
+  <h3><code>src/spark_descriptive.py</code> <span class="pill spark">PySpark</span> - сърцето на анализа</h3>
+  <p>Чете Parquet-а от Dask и прави същинския дескриптивен анализ с разпределени
+  <code>groupBy().agg()</code> операции:</p>
+  <ul>
+    <li><b>KPI:</b> общ приход, средна стойност на поръчка, брой поръчки, уникални клиенти/продукти;</li>
+    <li><b>Разпределения:</b> mean, std, min, max, <b>skewness (асиметрия)</b>, kurtosis, медиана и
+    квартили (чрез <code>approxQuantile</code>);</li>
+    <li><b>Top-10 продукти</b> по приход; приход по <b>категория</b>, <b>град</b>, <b>месец</b>, <b>час</b>;</li>
+    <li>разпределение по метод на плащане и по категория стойност на поръчка.</li>
+  </ul>
+  <p>Резултатите се записват в CSV през стандартния Python <code>csv</code> модул (за да работи
+  на Windows без Hadoop/<code>winutils</code>).</p>
+  <div class="say">Spark е стандартът в индустрията за наистина големи данни. Тук прави тежките
+  групови агрегации - един ред <code>groupBy().agg()</code> замества стотици редове MapReduce на Java.</div>
+</div>
+
+<div class="card file ray">
+  <h3><code>src/ray_parallel.py</code> <span class="pill ray">Ray</span></h3>
+  <p>Прави паралелен <b>Map-Reduce</b>, но за разлика от Dask/Spark, Ray паралелизира
+  <b>произволни Python функции</b>, не таблици:</p>
+  <ul>
+    <li><b>MAP:</b> с декоратора <code>@ray.remote</code> пускам по една задача на файл - всеки работник
+    чете 1 CSV и връща частични статистики (брой, сума, сума от квадрати, min, max, по категория);</li>
+    <li><b>REDUCE:</b> драйверът обединява частичните резултати в глобални
+    (средно, std чрез формулата E[x²]-E[x]², глобална хистограма на приходите).</li>
+  </ul>
+  <div class="say">Ray е различен - той не разделя таблица, а разпределя изпълнението на код.
+  Написах класически MapReduce на ръка: всеки файл се обработва паралелно, после сливам резултатите.</div>
+</div>
+
+<div class="card file">
+  <h3><code>src/visualize.py</code> - графики</h3>
+  <p>Прави 6 PNG графики с matplotlib/seaborn (colorblind-safe палитра, директни етикети).
+  Чете от CSV изходите, т.е. е отделен от анализа.</p>
+  <ol>
+    <li>Разпределение на приходите (хистограма)</li>
+    <li>Топ 10 продукти по приход</li>
+    <li>Дял на приходите по категория (Pareto / дълга опашка)</li>
+    <li>Месечен тренд на приходите</li>
+    <li>Брой поръчки по час</li>
+    <li>Поръчки по категория стойност</li>
+  </ol>
+</div>
+
+<div class="card file">
+  <h3><code>src/report.py</code> - автоматичен репорт</h3>
+  <p>Съставя репорт в <code>.txt</code> и <code>.html</code>: брой обработени записи, времена на всеки
+  етап, KPI, разпределения, Top-N, Pareto, <b>изводи</b> и cross-engine валидация
+  (че Dask, Spark и Ray дават еднакъв mean).</p>
+</div>
+
+<div class="card file">
+  <h3><code>main.py</code> - оркестратор</h3>
+  <p>Пуска 6-те етапа по ред и мери времето на всеки.
+  Опции: <code>python main.py</code>, <code>--skip-generate</code> (пропусни генериране),
+  <code>--only spark</code> (само един етап).</p>
+</div>
+
+<!-- 5 -->
+<h2 id="results">5. Резултати от анализа (от реалното пускане)</h2>
+<div class="kpis">
+  <div class="kpi"><div class="v">1 000 000</div><div class="l">генерирани записа</div></div>
+  <div class="kpi"><div class="v">839 877</div><div class="l">валидни след почистване</div></div>
+  <div class="kpi"><div class="v">160 123</div><div class="l">премахнати (невалидни/NULL)</div></div>
+  <div class="kpi"><div class="v">$1.19 млрд</div><div class="l">общ приход</div></div>
+  <div class="kpi"><div class="v">$1 416</div><div class="l">средна стойност/поръчка</div></div>
+  <div class="kpi"><div class="v">20 001</div><div class="l">уникални клиенти</div></div>
+</div>
+<p><b>Основни изводи (това ги има и в репорта):</b></p>
+<ul>
+  <li><b>Pareto / дълга опашка:</b> категория <i>Electronics</i> носи сама <b>63.7%</b> от целия приход.</li>
+  <li><b>Дясна асиметрия (skewness = 2.92):</b> средната стойност ($1 416) е доста над медианата
+  ($577) - няколко големи поръчки „дърпат" средното нагоре. Точно това трябва да покаже дескриптивният анализ.</li>
+  <li><b>Най-продаван продукт:</b> <i>Laptop Pro 15</i> (~$270.7 млн).</li>
+  <li><b>Cross-engine валидация:</b> Dask, Spark и Ray дават <b>еднакъв</b> среден приход ($1 416.29) → pipeline-ът е коректен.</li>
+</ul>
+<p><b>Времена на етапите:</b> Faker 25.1s · Dask 124.8s · PySpark 29.0s · Ray 3.9s · графики 1.4s.</p>
+
+<!-- 6 -->
+<h2 id="concepts">6. Ключови понятия (cheat sheet за защита)</h2>
+<table>
+  <thead><tr><th>Понятие</th><th>Какво да кажа</th></tr></thead>
+  <tbody>
+    <tr><td><b>3V на Big Data</b></td><td>Volume (обем), Velocity (скорост), Variety (разнообразие).</td></tr>
+    <tr><td><b>Защо разпределена обработка</b></td><td>Данните не се побират/обработват на един компютър - режат се на части и се смятат паралелно.</td></tr>
+    <tr><td><b>Lazy evaluation</b></td><td>Трансформациите не се изпълняват веднага; гради се граф и се смята при <code>compute()</code> (Dask) / action като <code>count()</code> (Spark). Позволява оптимизация.</td></tr>
+    <tr><td><b>MapReduce</b></td><td>Map = обработи всяка част паралелно; Reduce = обедини резултатите. Моят Ray код е точно това; Spark <code>groupBy</code> също.</td></tr>
+    <tr><td><b>Dask vs Spark vs Ray</b></td><td>Dask = лек, Pandas-подобен, out-of-core; Spark = тежък, индустриален стандарт за TB+; Ray = паралелизира произволен Python код, не таблици.</td></tr>
+    <tr><td><b>Parquet vs CSV</b></td><td>Parquet е колонен и компресиран → заема ~70-80% по-малко място и е по-бърз за аналитични заявки.</td></tr>
+    <tr><td><b>Описателни статистики</b></td><td>Централна тенденция (mean, median, mode), разсейване (std, range, квартили), форма (skewness/асиметрия).</td></tr>
+    <tr><td><b>Skewness (асиметрия)</b></td><td>Положителна (дясна) = дълга опашка надясно, mean &gt; median. При мен ≈ 2.92.</td></tr>
+    <tr><td><b>Pareto / long tail</b></td><td>Малко категории носят по-голямата част от стойността (80/20). При мен Electronics = 63.7%.</td></tr>
+    <tr><td><b>approxQuantile</b></td><td>Приблизителни квартили - по-бързи от точните при милиони редове; задавам малка грешка (0.001).</td></tr>
+    <tr><td><b>Почистване на данни</b></td><td>Махане на невалидни, запълване на NULL, дедупликация. „Garbage in, garbage out."</td></tr>
+  </tbody>
+</table>
+
+<!-- 7 -->
+<h2 id="run">7. Как да го пусна на моя компютър (macOS)</h2>
+<p>Трябват <b>Python 3.9+</b> и <b>Java (JDK 17 или 21)</b> за Spark.</p>
+<h3>Еднократна подготовка</h3>
+<pre><code># 1) Java (ако липсва) - през Homebrew:
+brew install openjdk@17
+
+# 2) В папката на проекта:
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt</code></pre>
+<h3>Пускане</h3>
+<pre><code># Целият pipeline (генериране → dask → spark → ray → графики → репорт)
+python main.py
+
+# По-бърз тест с по-малко данни:
+TOTAL_RECORDS=50000 NUM_FILES=4 python main.py
+
+# Повторно пускане без да се генерира наново:
+python main.py --skip-generate</code></pre>
+<p>Изходите излизат в <code>reports/</code> (репорт + графики) и <code>output/</code> (CSV агрегати).
+Отвори <code>reports/analysis_report.html</code> в браузър за най-добрия изглед.</p>
+<div class="say">Spark само <b>чете</b> Parquet, а записва резултатите с Python csv модул - затова не ми
+трябва Hadoop/winutils и работи директно на macOS.</div>
+
+<!-- 8 -->
+<h2 id="qa">8. Въпроси и отговори за защитата</h2>
+<div class="qa">
+  <details><summary>Защо избра дескриптивен анализ?</summary>
+    <div class="ans">Защото той е основата - отговаря на „какво се случи" и е първата стъпка преди
+    всеки диагностичен, прогнозен или прескриптивен анализ. Повечето реални анализи започват оттук.</div></details>
+  <details><summary>Къде точно се използва всяка от 4-те библиотеки?</summary>
+    <div class="ans">Faker - в <code>generator.py</code> (генериране); Dask - в <code>dask_processing.py</code>
+    (почистване + стат.); PySpark - в <code>spark_descriptive.py</code> (агрегации); Ray - в
+    <code>ray_parallel.py</code> (паралелен MapReduce).</div></details>
+  <details><summary>Какво е lazy evaluation и къде го има?</summary>
+    <div class="ans">Отложено изпълнение: трансформациите не се смятат веднага, а се трупа план (граф),
+    който се изпълнява при <code>compute()</code> (Dask) или при action операция като <code>count()</code>/<code>collect()</code> (Spark).
+    Позволява на системата да оптимизира целия поток преди да го изпълни.</div></details>
+  <details><summary>Защо записваш в Parquet, а не в CSV?</summary>
+    <div class="ans">Parquet е колонно-ориентиран и компресиран - заема много по-малко място и е по-бърз при
+    аналитични заявки, защото се четат само нужните колони. Стандарт за Data Lakes (S3/HDFS).</div></details>
+  <details><summary>Какво значи skewness = 2.92?</summary>
+    <div class="ans">Разпределението е силно дясно асиметрично - има дълга опашка от големи стойности.
+    Затова средната стойност ($1 416) е доста над медианата ($577): малко много големи поръчки дърпат средното нагоре.</div></details>
+  <details><summary>С какво Ray се различава от Spark и Dask?</summary>
+    <div class="ans">Spark и Dask паралелизират <b>таблици/dataframes</b>. Ray паралелизира <b>произволен Python код</b> -
+    превръщам обикновена функция в разпределена с <code>@ray.remote</code>. Тук написах MapReduce на ръка: по една задача на файл, после reduce.</div></details>
+  <details><summary>Как мериш времето на операциите?</summary>
+    <div class="ans">С <code>time.time()</code> преди и след всеки етап; стойностите влизат в репорта в секция
+    „Execution time of main operations". Това покрива изискването за производителност.</div></details>
+  <details><summary>Защо се махат 160 000 записа при почистването?</summary>
+    <div class="ans">Защото генераторът нарочно вкарва ~5% NULL и ~2% невалидни (отрицателни цена/количество).
+    Чистенето маха редовете с невалидна цена/количество/сума - демонстрира реална обработка на „мръсни" данни.</div></details>
+  <details><summary>Какво е groupBy / shuffle в Spark?</summary>
+    <div class="ans">groupBy групира редовете по ключ (напр. категория). За да събере всички редове с един ключ
+    на едно място, Spark прави shuffle - преразпределя данните между възлите. Това е Reduce фазата на MapReduce.</div></details>
+  <details><summary>Защо точно 1 000 000 записа?</summary>
+    <div class="ans">Заданието препоръчва минимум 500 000. Избрах 1 милион, за да е убедително „голям" набор,
+    но все пак да се върти за минути на лаптоп. Размерът се сменя лесно от config/.env.</div></details>
+  <details><summary>Какво е cross-engine валидацията?</summary>
+    <div class="ans">Dask, Spark и Ray смятат средния приход независимо и трите дават еднаква стойност
+    ($1 416.29). Това доказва, че pipeline-ът е коректен - ако нещо беше сбъркано, числата щяха да се разминат.</div></details>
+</div>
+
+<!-- 9 -->
+<h2 id="speech">9. Какво да кажа за 2 минути (кратка реч)</h2>
+<div class="card">
+<p>„Разработих Python приложение за <b>дескриптивен анализ на големи данни</b> върху 1 милион
+синтетични е-търговски транзакции. Използвам и четирите задължителни библиотеки:
+<b>Faker</b> генерира данните (нарочно с липсващи и невалидни стойности), <b>Dask</b> ги чисти и
+записва в Parquet чрез отложено изпълнение, <b>PySpark</b> прави същинския анализ с разпределени
+групови агрегации, а <b>Ray</b> независимо преизчислява статистиките чрез паралелен MapReduce.</p>
+<p>Анализът показва класическа <b>Pareto</b> структура - категория Electronics носи 63.7% от
+приходите - и силно <b>дясно асиметрично</b> разпределение, при което средната поръчка е над
+медианата. Проектът генерира <b>6 графики</b> и <b>автоматичен репорт</b> с изводи, брой обработени
+записи и времето на всяка операция. Накрая проверявам, че трите engine-а дават еднакъв резултат -
+което валидира целия pipeline."</p>
+</div>
+
+<footer>
+  Ръководство за защита · Проект по „Големи данни" · Вариант 1 - Дескриптивен анализ.
+  Пълните детайли са в кода (<code>src/</code>) и в автоматичния репорт (<code>reports/analysis_report.html</code>).
+</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Big Data - Descriptive Analysis Report</title>
+<style>
+  :root { --blue:#0072B2; --ink:#1a1a1a; --muted:#666; --line:#e3e3e3; --bg:#f7f8fa; --card:#fff; }
+  * { box-sizing:border-box; }
+  body { font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif; color:var(--ink);
+         background:var(--bg); margin:0; line-height:1.55; }
+  .wrap { max-width:1000px; margin:0 auto; padding:32px 20px 64px; }
+  header { border-bottom:3px solid var(--blue); padding-bottom:16px; margin-bottom:24px; }
+  h1 { margin:0 0 6px; font-size:26px; }
+  h2 { font-size:19px; margin:32px 0 12px; border-left:4px solid var(--blue); padding-left:10px; }
+  .meta { color:var(--muted); font-size:14px; }
+  .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:12px; margin:16px 0; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:16px; }
+  .card .val { font-size:22px; font-weight:700; color:var(--blue); }
+  .card .lbl { font-size:13px; color:var(--muted); margin-top:4px; }
+  table { border-collapse:collapse; width:100%; background:var(--card); border:1px solid var(--line);
+           border-radius:8px; overflow:hidden; font-size:14px; margin:8px 0; }
+  th,td { padding:8px 12px; text-align:left; border-bottom:1px solid var(--line); }
+  th { background:#eef2f6; font-size:12px; text-transform:uppercase; letter-spacing:.04em; color:var(--muted); }
+  td:nth-child(n+2) { font-variant-numeric:tabular-nums; }
+  ul { padding-left:20px; } li { margin-bottom:8px; }
+  figure { margin:0 0 24px; background:var(--card); border:1px solid var(--line); border-radius:10px; padding:12px; }
+  figure img { width:100%; height:auto; border-radius:6px; }
+  figcaption { color:var(--muted); font-size:13px; margin-top:8px; text-align:center; }
+  footer { margin-top:40px; color:var(--muted); font-size:13px; border-top:1px solid var(--line); padding-top:14px; }
+</style></head>
+<body><div class="wrap">
+  <header>
+    <h1>Big Data Project - Descriptive Analysis</h1>
+    <div class="meta">E-commerce transactions &middot; Variant 1 &middot;
+      Libraries: Faker, Dask, PySpark, Ray &middot; Generated 2026-10-04 12:19:54</div>
+  </header>
+
+  <h2>Dataset</h2>
+  <p>Raw records generated: <b>1,000,000</b> &middot;
+     invalid removed: <b>160,123</b> &middot;
+     records processed: <b>839,877</b>
+     &middot; raw size: <b>191.3 MB</b></p>
+
+  <h2>Key performance indicators</h2>
+  <div class="cards"><div class="card"><div class="val">$1,189,505,368</div><div class="lbl">Total revenue</div></div><div class="card"><div class="val">839,877</div><div class="lbl">Orders</div></div><div class="card"><div class="val">$1,416.29</div><div class="lbl">Avg order value</div></div><div class="card"><div class="val">20,001</div><div class="lbl">Unique customers</div></div><div class="card"><div class="val">21</div><div class="lbl">Unique products</div></div></div>
+
+  <h2>Distribution statistics</h2>
+  <table><thead><tr><th>Metric</th><th>Mean</th><th>Median</th><th>Std</th>
+    <th>Q25</th><th>Q75</th><th>Skewness</th></tr></thead><tbody><tr><td>price</td><td>257.79</td><td>124.47</td><td>323.33</td><td>51.42</td><td>313.79</td><td>2.06</td></tr><tr><td>quantity</td><td>5.50</td><td>6.00</td><td>2.87</td><td>3.00</td><td>8.00</td><td>0.00</td></tr><tr><td>total_amount</td><td>1,416.29</td><td>576.88</td><td>2,136.93</td><td>236.64</td><td>1,588.80</td><td>2.92</td></tr><tr><td>revenue</td><td>1,416.29</td><td>576.88</td><td>2,136.93</td><td>236.64</td><td>1,588.80</td><td>2.92</td></tr></tbody></table>
+
+  <h2>Top products by revenue</h2>
+  <table><thead><tr><th>#</th><th>Product</th><th>Category</th><th>Revenue</th><th>Orders</th></tr></thead>
+    <tbody><tr><td>1</td><td>Laptop Pro 15</td><td>Electronics</td><td>$270,747,825.59</td><td>37,793</td></tr><tr><td>2</td><td>Smartphone X</td><td>Electronics</td><td>$186,551,041.17</td><td>37,851</td></tr><tr><td>3</td><td>Mountain Bike</td><td>Sports</td><td>$116,186,423.60</td><td>38,432</td></tr><tr><td>4</td><td>Drone Mini</td><td>Electronics</td><td>$95,349,795.07</td><td>37,757</td></tr><tr><td>5</td><td>Action Camera</td><td>Electronics</td><td>$68,254,941.47</td><td>37,535</td></tr><tr><td>6</td><td>Robot Vacuum</td><td>Home &amp; Garden</td><td>$62,268,508.21</td><td>37,952</td></tr><tr><td>7</td><td>Smart Watch</td><td>Electronics</td><td>$51,557,328.81</td><td>37,566</td></tr><tr><td>8</td><td>Winter Jacket</td><td>Clothing</td><td>$41,629,002.39</td><td>37,640</td></tr><tr><td>9</td><td>Unknown Product</td><td>Electronics</td><td>$37,233,759.18</td><td>13,718</td></tr><tr><td>10</td><td>Wireless Headphones</td><td>Electronics</td><td>$31,312,297.86</td><td>38,026</td></tr></tbody></table>
+
+  <h2>Revenue by category</h2>
+  <table><thead><tr><th>Category</th><th>Revenue</th><th>Share</th><th>Orders</th></tr></thead>
+    <tbody><tr><td>Electronics</td><td>$757,737,190.33</td><td>63.7%</td><td>278,270</td></tr><tr><td>Sports</td><td>$155,097,845.17</td><td>13.0%</td><td>120,251</td></tr><tr><td>Home &amp; Garden</td><td>$121,449,222.86</td><td>10.2%</td><td>159,754</td></tr><tr><td>Uncategorized</td><td>$59,674,408.45</td><td>5.0%</td><td>42,353</td></tr><tr><td>Clothing</td><td>$56,896,422.78</td><td>4.8%</td><td>79,295</td></tr><tr><td>Toys</td><td>$25,519,801.97</td><td>2.1%</td><td>80,231</td></tr><tr><td>Books</td><td>$13,130,476.81</td><td>1.1%</td><td>79,723</td></tr></tbody></table>
+
+  <h2>Execution time of main operations</h2>
+  <table><thead><tr><th>Stage</th><th>Time</th></tr></thead><tbody><tr><td>1. Data generation (Faker)</td><td>25.11 s</td></tr><tr><td>2. Cleaning &amp; stats (Dask)</td><td>124.79 s</td></tr><tr><td>3. Descriptive analysis (PySpark)</td><td>29.00 s</td></tr><tr><td>4. Parallel stats (Ray)</td><td>3.91 s</td></tr><tr><td>5. Visualization</td><td>1.36 s</td></tr>
+    <tr><td><b>Total</b></td><td><b>184.17 s</b></td></tr></tbody></table>
+
+  <h2>Conclusions</h2>
+  <ul><li>The dataset contains 839,877 valid orders from 20,001 unique customers, generating a total revenue of $1,189,505,368.37 (average order value $1,416.29).</li><li>Revenue is highly concentrated (a long-tail / Pareto pattern): the top category &#x27;Electronics&#x27; alone accounts for 63.7% of all revenue.</li><li>The order-value distribution is right-skewed (skewness = 2.92): the mean ($1,416.29) is well above the median ($576.88), so a few large orders pull the average up - exactly the shape descriptive analysis is meant to reveal.</li><li>The single best-selling product by revenue is &#x27;Laptop Pro 15&#x27; ($270,747,825.59).</li><li>Order activity peaks around 18:00 (35,465 orders in that hour).</li><li>The three engines agree: mean revenue computed by Dask ($1,416.29), Spark and Ray ($1,416.29) match, which validates the pipeline.</li></ul>
+
+  <h2>Visualizations</h2>
+  <figure><img src="charts/01_revenue_distribution.png" alt="Distribution of transaction revenue"><figcaption>Distribution of transaction revenue</figcaption></figure><figure><img src="charts/02_top_products.png" alt="Top 10 products by revenue"><figcaption>Top 10 products by revenue</figcaption></figure><figure><img src="charts/03_category_pareto.png" alt="Revenue share by category (Pareto)"><figcaption>Revenue share by category (Pareto)</figcaption></figure><figure><img src="charts/04_monthly_trend.png" alt="Monthly revenue trend"><figcaption>Monthly revenue trend</figcaption></figure><figure><img src="charts/05_orders_by_hour.png" alt="Orders by hour of day"><figcaption>Orders by hour of day</figcaption></figure><figure><img src="charts/06_order_value_categories.png" alt="Orders by value category"><figcaption>Orders by value category</figcaption></figure>
+
+  <footer>Automatically generated report &middot; descriptive big-data analysis pipeline.</footer>
+</div></body></html>

@@ -1,0 +1,97 @@
+================================================================================
+              BIG DATA PROJECT - DESCRIPTIVE ANALYSIS (Variant 1)               
+                   E-commerce transactions - automatic report                   
+================================================================================
+Generated at : 2026-10-04 12:19:54
+Analysis type: Descriptive (What happened?)
+Libraries    : Faker, Dask, PySpark, Ray
+
+--------------------------------------------------------------------------------
+1) DATASET
+--------------------------------------------------------------------------------
+  Raw records generated : 1,000,000
+  Invalid removed       : 160,123
+  Records processed     : 839,877
+  Files / NULL rate     : 10 files / 5% NULLs
+  Raw size on disk      : 191.34 MB
+
+--------------------------------------------------------------------------------
+2) KEY PERFORMANCE INDICATORS
+--------------------------------------------------------------------------------
+  Total revenue         : $1,189,505,368.37
+  Average order value   : $1,416.29
+  Total orders          : 839,877
+  Unique customers      : 20,001
+  Unique products       : 21
+  Total items sold      : 4,618,511
+
+--------------------------------------------------------------------------------
+3) DISTRIBUTION STATISTICS
+--------------------------------------------------------------------------------
+  metric               mean      median         std     skew
+  price              257.79      124.47      323.33     2.06
+  quantity             5.50        6.00        2.87     0.00
+  total_amount     1,416.29      576.88    2,136.93     2.92
+  revenue          1,416.29      576.88    2,136.93     2.92
+
+--------------------------------------------------------------------------------
+4) TOP 5 PRODUCTS BY REVENUE
+--------------------------------------------------------------------------------
+  1. Laptop Pro 15          $270,747,825.59 (37,793 orders)
+  2. Smartphone X           $186,551,041.17 (37,851 orders)
+  3. Mountain Bike          $116,186,423.60 (38,432 orders)
+  4. Drone Mini             $ 95,349,795.07 (37,757 orders)
+  5. Action Camera          $ 68,254,941.47 (37,535 orders)
+
+--------------------------------------------------------------------------------
+5) REVENUE BY CATEGORY
+--------------------------------------------------------------------------------
+  Electronics        $757,737,190.33 ( 63.7%)
+  Sports             $155,097,845.17 ( 13.0%)
+  Home & Garden      $121,449,222.86 ( 10.2%)
+  Uncategorized      $ 59,674,408.45 (  5.0%)
+  Clothing           $ 56,896,422.78 (  4.8%)
+  Toys               $ 25,519,801.97 (  2.1%)
+  Books              $ 13,130,476.81 (  1.1%)
+
+--------------------------------------------------------------------------------
+6) EXECUTION TIME OF MAIN OPERATIONS
+--------------------------------------------------------------------------------
+  1. Data generation (Faker)                  25.11 s
+  2. Cleaning & stats (Dask)                 124.79 s
+  3. Descriptive analysis (PySpark)           29.00 s
+  4. Parallel stats (Ray)                      3.91 s
+  5. Visualization                             1.36 s
+  TOTAL                                      184.17 s
+
+--------------------------------------------------------------------------------
+7) CONCLUSIONS
+--------------------------------------------------------------------------------
+  1. The dataset contains 839,877 valid orders from 20,001 unique customers,
+     generating a total revenue of $1,189,505,368.37 (average order value
+     $1,416.29).
+  2. Revenue is highly concentrated (a long-tail / Pareto pattern): the top
+     category 'Electronics' alone accounts for 63.7% of all revenue.
+  3. The order-value distribution is right-skewed (skewness = 2.92): the mean
+     ($1,416.29) is well above the median ($576.88), so a few large orders
+     pull the average up - exactly the shape descriptive analysis is meant to
+     reveal.
+  4. The single best-selling product by revenue is 'Laptop Pro 15'
+     ($270,747,825.59).
+  5. Order activity peaks around 18:00 (35,465 orders in that hour).
+  6. The three engines agree: mean revenue computed by Dask ($1,416.29), Spark
+     and Ray ($1,416.29) match, which validates the pipeline.
+
+--------------------------------------------------------------------------------
+8) VISUALIZATIONS (see reports/charts/)
+--------------------------------------------------------------------------------
+  - 01_revenue_distribution.png: Distribution of transaction revenue
+  - 02_top_products.png: Top 10 products by revenue
+  - 03_category_pareto.png: Revenue share by category (Pareto)
+  - 04_monthly_trend.png: Monthly revenue trend
+  - 05_orders_by_hour.png: Orders by hour of day
+  - 06_order_value_categories.png: Orders by value category
+
+================================================================================
+                 End of report - generated 2026-10-04 12:19:54                  
+================================================================================

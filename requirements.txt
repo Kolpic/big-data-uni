@@ -1,0 +1,23 @@
+# ═══════════════════════════════════════════════════════════════════════════
+# Project dependencies - Big Data Descriptive Analysis (Variant 1)
+# Install with:  pip install -r requirements.txt
+# ═══════════════════════════════════════════════════════════════════════════
+
+# --- Mandatory big-data libraries (required by the assignment) ---
+pyspark==3.5.3            # Distributed processing and analysis
+dask[dataframe]==2024.5.0 # Out-of-core / parallel data processing
+ray==2.9.3               # Parallel execution of computations
+Faker==22.0.0            # Synthetic data generation
+
+# --- Data handling ---
+pandas==2.2.2
+numpy==1.26.4
+pyarrow==15.0.2          # Parquet engine (used by Spark/Dask/pandas)
+
+# --- Visualization ---
+matplotlib==3.8.4
+seaborn==0.13.2
+
+# --- Utilities ---
+python-dotenv==1.0.1     # Load configuration from a .env file
+setuptools<81            # Ray 2.9.x still imports pkg_resources (removed in setuptools 81)
