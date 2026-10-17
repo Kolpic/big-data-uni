@@ -153,19 +153,3 @@ Order volume is roughly uniform across the 24 hours (synthetic data).
 Most orders fall into the "Very Large" bucket given the product price mix.
 
 ![Order value categories](reports/charts/06_order_value_categories.png)
-
----
-
-## Mapping to the grading criteria (100 pts)
-
-| Component | Pts | Where |
-|-----------|----:|-------|
-| Data & preparation | 10 | `generator.py` (dirty data) + Dask/Spark cleaning |
-| Faker | 10 | `src/generator.py` |
-| Dask | 10 | `src/dask_processing.py` (lazy graph, single `dask.compute`) |
-| PySpark | 15 | `src/spark_descriptive.py` (distributed aggregations) |
-| Ray | 10 | `src/ray_parallel.py` (`@ray.remote` map-reduce) |
-| Chosen analysis (Descriptive) | 20 | KPIs, distribution, Top-N, Pareto, trends |
-| Visualization & interpretation | 10 | `src/visualize.py` + report conclusions |
-| Automatic report | 10 | `src/report.py` (`.txt` + `.html`) |
-| Performance & code quality | 5 | per-stage timing, modular code, logging |
