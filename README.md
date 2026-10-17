@@ -120,6 +120,42 @@ the number of processed records and the execution time of the main operations.
 
 ---
 
+## Visualizations
+
+Generated from a real run on 1,000,000 records (839,877 valid after cleaning).
+
+### 1. Distribution of transaction revenue
+Right-skewed distribution - most orders are small, a few are very large.
+
+![Revenue distribution](reports/charts/01_revenue_distribution.png)
+
+### 2. Top 10 products by revenue
+`Laptop Pro 15` leads with ~$270.7M.
+
+![Top products](reports/charts/02_top_products.png)
+
+### 3. Revenue share by category (Pareto)
+Long-tail / Pareto pattern - `Electronics` alone is 63.7% of revenue.
+
+![Category Pareto](reports/charts/03_category_pareto.png)
+
+### 4. Monthly revenue trend
+The first and last months are partial (180-day window), so they are lower.
+
+![Monthly trend](reports/charts/04_monthly_trend.png)
+
+### 5. Orders by hour of day
+Order volume is roughly uniform across the 24 hours (synthetic data).
+
+![Orders by hour](reports/charts/05_orders_by_hour.png)
+
+### 6. Orders by value category
+Most orders fall into the "Very Large" bucket given the product price mix.
+
+![Order value categories](reports/charts/06_order_value_categories.png)
+
+---
+
 ## Mapping to the grading criteria (100 pts)
 
 | Component | Pts | Where |
